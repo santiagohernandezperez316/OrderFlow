@@ -37,12 +37,32 @@ services:
       RabbitMq__Host: rabbitmq
       RabbitMq__Username: ${RABBITMQ_USER}
       RabbitMq__Password: ${RABBITMQ_PASSWORD}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN}
     ports:
       - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     depends_on:
       sqlserver:
         condition: service_healthy
       rabbitmq:
+        condition: service_healthy
+
+  orders-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://localhost:8080
+        VITE_HUB_URL: http://localhost:8080/hubs/orders
+    ports:
+      - "8082:80"
+    depends_on:
+      orders-api:
         condition: service_healthy
 
   inventory-worker:
@@ -58,6 +78,12 @@ services:
       ENABLE_DIAGNOSTICS: ${ENABLE_DIAGNOSTICS:-false}
     ports:
       - "8081:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     depends_on:
       sqlserver:
         condition: service_healthy
