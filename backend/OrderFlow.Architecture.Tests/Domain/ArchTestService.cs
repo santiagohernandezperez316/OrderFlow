@@ -12,7 +12,7 @@ namespace ArchitectureTests
         ).Build();
 
         [Fact]
-        public void LosServiciosDebenTerminarConService()
+        public void ServicesShouldHaveServiceSuffix()
         {
             var portNamespacePattern = "OrderFlow.Domain.*.Service";
 

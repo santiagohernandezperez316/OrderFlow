@@ -5,7 +5,7 @@ using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
 namespace ArchitectureTests
 {
-    public class PruebasDeArquitectura
+    public class ArchitectureTests
     {
 
         private static readonly Architecture Architecture = new ArchLoader().LoadAssemblies(

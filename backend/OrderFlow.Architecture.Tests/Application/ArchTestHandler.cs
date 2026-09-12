@@ -12,7 +12,7 @@ namespace ArchitectureTests
         ).Build();
 
         [Fact]
-        public void LosManejadoresDebenEstarEnCommand()
+        public void HandlersShouldResideInCommandNamespace()
         {
             var portNamespacePatternCommand = "OrderFlow.Application.*.Command";
 
@@ -30,7 +30,7 @@ namespace ArchitectureTests
         }
 
         [Fact]
-        public void LosManejadoresDebenEstarEnQuery()
+        public void HandlersShouldResideInQueryNamespace()
         {
             var portNamespacePatternQuery = "OrderFlow.Application.*.Query";
 

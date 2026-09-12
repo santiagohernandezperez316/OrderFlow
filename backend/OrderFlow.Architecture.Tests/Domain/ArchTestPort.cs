@@ -12,7 +12,7 @@ namespace ArchitectureTests
         ).Build();
 
         [Fact]
-        public void LosRepositoriosDebenTerminarConRepository()
+        public void RepositoriesShouldHaveRepositorySuffix()
         {
             var portNamespacePattern = "OrderFlow.Domain.*.Port";
 
