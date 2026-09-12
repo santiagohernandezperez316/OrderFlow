@@ -13,7 +13,7 @@ namespace ArchitectureTests
         ).Build();
 
         [Fact]
-        public void Api_ShouldUseMediatorForRequests2()
+        public void LosApiHandlersDebenDependerDeMediator()
         {
             var apiHandlerClasses = Classes()
                 .That().ResideInNamespace("OrderFlow.Api.ApiHandlers", true)

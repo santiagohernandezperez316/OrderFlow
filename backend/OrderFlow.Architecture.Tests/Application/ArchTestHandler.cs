@@ -12,10 +12,9 @@ namespace ArchitectureTests
         ).Build();
 
         [Fact]
-        public void LosManejadoresDebenEstarEnCommandYQuery()
+        public void LosManejadoresDebenEstarEnCommand()
         {
             var portNamespacePatternCommand = "OrderFlow.Application.*.Command";
-            var portNamespacePatternQuery = "OrderFlow.Application.*.Query";
 
             Classes()
             .That()
@@ -27,6 +26,24 @@ namespace ArchitectureTests
             .OrShould()
             .HaveNameEndingWith("Factory")
             .Because("Los manejadores deben estar en la capa de aplicaci�n y deben tener nombres que terminen con 'Handler'")
+            .Check(Architecture);
+        }
+
+        [Fact]
+        public void LosManejadoresDebenEstarEnQuery()
+        {
+            var portNamespacePatternQuery = "OrderFlow.Application.*.Query";
+
+            Classes()
+            .That()
+            .ResideInNamespace(portNamespacePatternQuery, true)
+            .Should()
+            .HaveNameEndingWith("Handler")
+            .OrShould()
+            .HaveNameEndingWith("Query")
+            .OrShould()
+            .HaveNameEndingWith("Dto")
+            .Because("Los manejadores de consulta deben estar en la capa de aplicaci�n y deben tener nombres que terminen con 'Handler', 'Query' o 'Dto'")
             .Check(Architecture);
         }
     }

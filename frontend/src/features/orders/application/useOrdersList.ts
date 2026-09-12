@@ -9,7 +9,7 @@ export type OrderStatusChangedHandler = (orderId: string, status: OrderStatus, r
 const POLLING_INTERVAL_MS = 10_000;
 const FLASH_DURATION_MS = 500;
 
-export type OrdersListStatus = "loading" | "success" | "error";
+export type OrdersListStatus = "idle" | "loading" | "success" | "error";
 export type RealtimeMode = "live" | "polling";
 
 export interface UseOrdersListResult {
@@ -39,7 +39,7 @@ export function useOrdersList(
   realtime: OrderRealtimePort,
   onOrderStatusChanged?: OrderStatusChangedHandler,
 ): UseOrdersListResult {
-  const [status, setStatus] = useState<OrdersListStatus>("loading");
+  const [status, setStatus] = useState<OrdersListStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [mode, setMode] = useState<RealtimeMode>("polling");

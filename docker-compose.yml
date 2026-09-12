@@ -33,6 +33,7 @@ services:
       dockerfile: OrderFlow.Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      Serilog__MinimumLevel__Override__Microsoft.EntityFrameworkCore.Database.Command: Warning
       ConnectionStrings__OrdersDb: Server=sqlserver,1433;Database=OrderFlowDb;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True
       RabbitMq__Host: rabbitmq
       RabbitMq__Username: ${RABBITMQ_USER}

@@ -3,6 +3,7 @@ using OrderFlow.Api.Consumers;
 using OrderFlow.Api.Filters;
 using OrderFlow.Api.Hubs;
 using OrderFlow.Api.Middleware;
+using OrderFlow.Api.Swagger;
 using OrderFlow.Application.Ports;
 using OrderFlow.Infrastructure.Common;
 using OrderFlow.Infrastructure.Extensions;
@@ -35,7 +36,7 @@ builder.Services.AddHealthChecks()
 builder.Services.AddAutoMapper(Assembly.Load("OrderFlow.Application"));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => options.SchemaFilter<EnumSchemaFilter>());
 
 builder.Services.AddSignalR()
     .AddJsonProtocol(options =>
@@ -91,8 +92,9 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-builder.Host.UseSerilog((_, loggerconfiguration) =>
+builder.Host.UseSerilog((context, loggerconfiguration) =>
     loggerconfiguration
+        .ReadFrom.Configuration(context.Configuration)
         .WriteTo.Console());
 
 SelfLog.Enable(Console.Error);

@@ -88,7 +88,7 @@ export function OrdersList({ status, errorMessage, orders, mode, flashingIds, on
 
       <StatusSummary orders={orders} />
 
-      {status === "loading" && orders.length === 0 ? <SkeletonRows /> : null}
+      {(status === "loading" || status === "idle") && orders.length === 0 ? <SkeletonRows /> : null}
 
       {status === "error" ? (
         <div
