@@ -39,6 +39,14 @@ public static class InventoryStartupExtensions
                 context.Database.Migrate();
                 return;
             }
+            // SqlException.Number == -2: timeout de comando (p.ej. el ALTER DATABASE de la primera
+            // migracion) por contencion de locks contra la migracion concurrente del otro servicio
+            // sobre la misma instancia de SQL Server. Es transitorio y se resuelve solo en el retry.
+            catch (SqlException ex) when (attempt < maxAttempts && ex.Number == -2)
+            {
+                logger.LogInformation("Contencion esperada durante migracion concurrente de Inventory contra la misma instancia de SQL Server (timeout, intento {Attempt}/{MaxAttempts}). Reintentando en 5 segundos.", attempt, maxAttempts);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            }
             catch (SqlException ex) when (attempt < maxAttempts)
             {
                 logger.LogWarning(ex, "Intento {Attempt}/{MaxAttempts} de migrar la base de datos de Inventory fallo. Reintentando en 5 segundos.", attempt, maxAttempts);

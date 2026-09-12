@@ -252,7 +252,7 @@ para esta prueba, CORS en el backend es la opción más simple y confiable.
 
 ## Tests
 
-30 tests en total, repartidos en 4 proyectos:
+31 tests en total, repartidos en 4 proyectos:
 
 - `OrderFlow.Domain.Tests` (9): reglas de validación de `Order`/`Product` y transición de estado
   (`Confirm`/`Reject` idempotentes).
@@ -266,11 +266,11 @@ para esta prueba, CORS en el backend es la opción más simple y confiable.
   fuera de rango, caso válido) y un test end-to-end (`CreateOrderEndpointTests`) que levanta la
   API completa con `WebApplicationFactory` y verifica `POST /orders` con payload inválido
   respondiendo `400` real.
-- `OrderFlow.Architecture.Tests` (10): reglas de dependencia entre capas (ArchUnitNET), incluida
+- `OrderFlow.Architecture.Tests` (11): reglas de dependencia entre capas (ArchUnitNET), incluida
   la que impide que `Application` dependa de MassTransit o EF Core directamente.
 
 `backend/OrderFlow.sln` agrupa los 10 proyectos (6 de producto + 4 de test), así que basta un
-solo comando para correr los 30 tests:
+solo comando para correr los 31 tests:
 
 ```bash
 cd backend
